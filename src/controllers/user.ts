@@ -12,6 +12,12 @@ userRouter.get("/", async (request: Request, response: Response) => {
 userRouter.post("/", async (request: Request, response: Response) => {
   const { username, password } = request.body;
 
+  if (!username || !password){
+    return {
+      error: 'provide all required fields'
+    }
+  }
+
   const existingUser = await User.findOne({ username });
 
   if (existingUser) {
