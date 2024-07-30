@@ -1,9 +1,23 @@
-import express, { Request, Response } from 'express';
+import express, { Express } from "express";
+import mongoose from "mongoose";
 
-import userRouter from './controllers/user';
+import logger from "./utils/logger";
+import config from "./utils/config";
+import userRouter from "./controllers/user";
 
-const app = express();
+const app: Express = express();
 
-app.use('/api/v1/user', userRouter)
+logger.info("Connecting to the Database");
+mongoose
+  .connect(config.MONGO_URI)
+  .then(() => {
+    logger.info("Connected to the Database");
+  })
+  .catch((error) => {
+    logger.error("Error connecting to the Database", error.message);
+  });
+
+app.use(express.json());
+app.use("/api/v1/user", userRouter);
 
 export default app;
