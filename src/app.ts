@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 
 import logger from "./utils/logger";
 import config from "./utils/config";
+
 import userRouter from "./controllers/user";
 import loginRouter from "./controllers/login";
+import gatedRouter from "./controllers/gated";
 
 const app: Express = express();
 
@@ -22,5 +24,6 @@ app.use(express.json());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/login", loginRouter)
+app.use("/api/v1/gated", gatedRouter)
 
 export default app;
